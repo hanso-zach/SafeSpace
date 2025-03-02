@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Log</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/site.css' %}" />
+</head>
+<body>
+    <header>
+        <h1>Mood Log</h1>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'journal' %}">Journal</a>
+            <a href="{% url 'mood_tracking' %}">Mood Log</a>
+            <a href="{% url 'hotlines' %}">Hotlines</a>
+            <a href="{% url 'community' %}">Community</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <h2>Track Your Mood</h2>
+        <form method="POST" action="#">
+            {% csrf_token %}
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+            
+            <label for="mood">Mood:</label>
+            <select id="mood" name="mood" required>
+                <option value="happy">Happy</option>
+                <option value="neutral">Neutral</option>
+                <option value="sad">Sad</option>
+                <option value="angry">Angry</option>
+                <option value="anxious">Anxious</option>
+            </select>
+
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" placeholder="Write your thoughts..."></textarea>
+
+            <button type="submit">Save</button>
+        </form>
+        <section>
+            <h2>Your Mood History</h2>
+            {% if moods %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Mood</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mood in moods %}
+                            <tr>
+                                <td>{{ mood.date|date:"D, M d, Y" }}</td>
+                                <td>{{ mood.mood|title }}</td>
+                                <td>{{ mood.notes }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No mood entries found. Start tracking your mood above!</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/site.css' %}" />
+</head>
+<body>
+    <header>
+        <h1>Community</h1>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'journal' %}">Journal</a>
+            <a href="{% url 'mood_tracking' %}">Mood Log</a>
+            <a href="{% url 'hotlines' %}">Hotlines</a>
+            <a href="{% url 'community' %}">Community</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <h2>Community Posts</h2>
+        <p>Connect with other people here on SafeSpace.</p>
+        <section id="posts">
+            <h3>Recent Posts</h3>
+            <ul>
+                {% for post in posts %}
+                    <li>
+                        <strong>{{ post.author }}</strong> - <em>{{ post.date }}</em>
+                        <p>{{ post.content }}</p>
+                    </li>
+                {% empty %}
+                    <li>No posts yet. Be the first to contribute!</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section id="new-post">
+            <h3>Create a New Anonymous Post</h3>
+            {% csrf_token %}
+            <form method="POST" action="#">
+                <label for="content">Post Content:</label>
+                <textarea id="content" name="content" rows="4" placeholder="What's on your mind?" required></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </section>
+
+    </main>
+</body>
+</html>

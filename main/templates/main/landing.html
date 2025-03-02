@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeSpace - Landing</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/site.css' %}" />
+</head>
+<body>
+    <header>
+        <h1>SafeSpace</h1>
+        <a href="{% url 'dashboard' %}">Login</a>
+        <a href="{% url 'dashboard' %}">Sign Up</a>
+    </header>
+    <section>
+        <h2>Your Mental Health, Our Priority</h2>
+        <p>Join us in building a healthier, safer space for your mental wellness.</p>
+        <a href="{% url 'dashboard' %}">Get Started</a>
+    </section>
+</body>
+</html>
