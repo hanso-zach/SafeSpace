@@ -13,4 +13,5 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='main/login.html'), name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
+    path('shared-journals/', views.shared_journals, name='shared_journals'),
 ]

@@ -7,6 +7,7 @@ class JournalEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     entry = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=False)
     def __str__(self):
         return f"Entry by {self.user.username} on {self.created_at}"
     

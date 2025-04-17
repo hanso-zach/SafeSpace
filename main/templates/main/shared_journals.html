@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shared Journal Entries</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/site.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Shared Journal Entries</h1>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'journal' %}">Journal</a>
+            <a href="{% url 'shared_journals' %}">Shared Journals</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% if entries %}
+            {% for entry in entries %}
+                <div class="journal-entry">
+                    <p><strong>{{ entry.user.username }}</strong> wrote:</p>
+                    <blockquote>{{ entry.entry|linebreaks }}</blockquote>
+                    <small>{{ entry.created_at|date:"F d, Y H:i" }}</small>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No shared journal entries yet.</p>
+        {% endif %}
+    </main>
+</body>
+</html>
